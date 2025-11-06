@@ -44,52 +44,16 @@ The app includes **email OTP verification**, **secure password reset**, and a **
 ---
 
 ## 📂 Project Structure
-loginsystem/
-├── src/
-│   ├── main/
-│   │   ├── java/
-│   │   │   ├── com/
-│   │   │       ├── project2/
-│   │   │           ├── loginsystem/
-│   │   │               ├── config/
-│   │   │               │   └── SecurityConfig.java
-│   │   │               ├── controller/
-│   │   │               │   └── AppController.java
-│   │   │               ├── entity/
-│   │   │               │   ├── Roles.java
-│   │   │               │   └── User.java
-│   │   │               ├── repository/
-│   │   │               │   ├── RolesRespository.java
-│   │   │               │   └── UserRepository.java
-│   │   │               ├── service/
-│   │   │               │   ├── EmailService.java
-│   │   │               │   └── JpaUserDetailsService.java
-│   │   │               └── LoginSystemApplication.java
-│   │   ├── resources/
-│   │       ├── static/
-│   │       │   ├── css/
-│   │       │   │   └── styles.css
-│   │       │   ├── js/
-│   │       │       └── script.js
-│   │       ├── templates/
-│   │       │   ├── admin.html
-│   │       │   ├── email-otp-template.html
-│   │       │   ├── email-reset-template.html
-│   │       │   ├── forgot-password.html
-│   │       │   ├── home.html
-│   │       │   ├── login.html
-│   │       │   ├── reset-password.html
-│   │       │   └── signup.html
-│   │       └── application.properties
-│   ├── test/
-│       ├── java/
-│           ├── com/
-│               ├── project2/
-│                   ├── loginsystem/
-│                       └── LoginSystemApplicationTests.java
-├── mvnw
-├── mvnw.cmd
-└── pom.xml
+| Directory/File | Location | Description |
+| :--- | :--- | :--- |
+| **`LoginSystemApplication.java`** | `src/main/java/.../loginsystem/` | Main application entry point. |
+| **`SecurityConfig.java`** | `.../config/` | Configures **Spring Security** (access control, password encoder). |
+| **`AppController.java`** | `.../controller/` | Handles all primary web routes (`/`, `/login`, `/signup`, `/admin`). |
+| **`User.java`, `Roles.java`** | `.../entity/` | JPA database models. |
+| **`EmailService.java`** | `.../service/` | Business logic for sending emails. |
+| **`application.properties`** | `src/main/resources/` | **Configuration file** for database and email settings. |
+| **`templates/`** | `src/main/resources/` | Contains all **Thymeleaf HTML views** (`login.html`, `signup.html`, etc.). |
+| **`pom.xml`** | Root Directory | Defines all project dependencies (Maven). |
 ---
 
 ## 🚀 How to Run
@@ -110,55 +74,66 @@ loginsystem/
 ### 3. Configure the Application
 Open `src/main/resources/application.properties` and fill in your details.
 
-**Database Configuration:**
+````markdown
+# 🛠️ Login System Project Setup Guide
+
+## 🗄️ Database Configuration
+
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/loginsystem_db
 spring.datasource.user=YOUR_MYSQL_USERNAME
 spring.datasource.password=YOUR_MYSQL_PASSWORD
+````
 
-# 📧 Email Configuration (for a Gmail Account)
+-----
 
-> **Important:** You must generate a 16-digit **App Password** from your Google account.  
-> **Do not use your normal password.**
+## 📧 Email Configuration (for a Gmail Account)
 
-### Steps:
-1. Go to your [Google Account settings](https://myaccount.google.com)
-2. Navigate to **Security → 2-Step Verification** (it must be **ON**)
-3. Go to **App Passwords**
-4. Generate a new password for:
-   - **App:** Mail  
-   - **Device:** Other (Custom name)
-5. Use that **16-digit password** in the configuration below:
+> **⚠️ Important:** You must generate a **16-digit App Password** from your Google account. **Do not use your normal password.**
 
----
+### Steps for Generating an App Password:
 
-### ⚙️ Properties
+1.  Go to your [Google Account settings](https://myaccount.google.com)
+2.  Navigate to **Security** → **2-Step Verification** (it must be **ON**)
+3.  Go to **App Passwords**
+4.  Generate a new password for:
+      * **App:** Mail
+      * **Device:** Other (Custom name)
+5.  Use that **16-digit password** in the configuration below:
+
+### ⚙️ Mail Properties
 
 ```properties
 spring.mail.username=YOUR_GMAIL_ADDRESS@gmail.com
 spring.mail.password=YOUR_16_DIGIT_APP_PASSWORD
+```
 
-# 🔒 Recommended: Use Environment Variables
+-----
 
-For better security, avoid hardcoding passwords.
+## 🔒 Recommended: Use Environment Variables
+
+For better security, **avoid hardcoding passwords** directly in the configuration files.
 
 ```properties
 spring.datasource.password=${DB_PASSWORD}
 spring.mail.password=${EMAIL_PASSWORD}
+```
+
+-----
 
 ## ⚙️ Run the Application
 
-You can run the app in two ways:
+You can run the application in two primary ways:
 
 ### 🧩 A) From IntelliJ IDEA
 
-1. Open **LoginSystemApplication.java**  
-2. Right-click the `main` method → Select **Run**  
-3. The following property will automatically create/update your database tables:
-spring.jpa.hibernate.ddl-auto=update
-This will generate tables like `user`, `roles`, and `user_roles`.
+1.  Open the main application file: **`LoginSystemApplication.java`**
+2.  Right-click the `main` method → Select **Run**
+3.  The following property will automatically create/update your database tables:
+      * `spring.jpa.hibernate.ddl-auto=update`
+      * This will generate necessary tables like `user`, `roles`, and `user_roles`.
 
----
+-----
 
 ### 💻 B) From the Command Line (Maven)
 
@@ -168,19 +143,29 @@ mvn clean install
 
 # Run the application
 java -jar target/loginsystem-0.0.1-SNAPSHOT.jar
+```
 
 Once started, open your browser and visit:
-👉 http://localhost:8080
----
+👉 **`http://localhost:8080`**
 
-### 🆓 Free to Use
+-----
 
-This project is completely free to use, modify, and share for learning or development purposes.
-If you find it helpful, please ⭐ the repository on GitHub!
+## 🆓 Free to Use
+
+This project is completely **free to use, modify, and share** for learning or development purposes.
+
+If you find it helpful, please **⭐ star the repository on GitHub\!**
+
+-----
 
 ## 👤 Author
 
 **Shivansh Mishra**
-* GitHub: [@shivanshmishra54](https://github.com/shivanshmishra54)
-* LinkedIn: [shivansh-mishra54](https://www.linkedin.com/in/shivansh-mishra54/)
-* 
+
+  * **GitHub:** [@shivanshmishra54](https://github.com/shivanshmishra54)
+  * **LinkedIn:** [shivansh-mishra54](https://www.linkedin.com/in/shivansh-mishra54/)
+
+<!-- end list -->
+
+```
+```
