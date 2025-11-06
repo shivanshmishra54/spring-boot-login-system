@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Sign Up</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+<body>
+<div class="container">
+    <h1>Create Account</h1>
+
+    <div th:if="${param.user_error}" class="message message-error">
+        Username already exists.
+    </div>
+    <div th:if="${param.otp_error}" class="message message-error"
+         th:text="${param.otp_error} ? ${param.otp_error} : 'Invalid or expired OTP.'">
+        Invalid or expired OTP.
+    </div>
+
+    <div id="otp-sent-message" class="message message-success" style="display: none;">
+        OTP sent to your email!
+    </div>
+    <div id="verify-success-message" class="message message-success" style="display: none;">
+        Email verification successful! You can now create your account.
+    </div>
+
+    <form th:action="@{/loginsystem/signup}" th:object="${user}" method="post">
+
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" class="form-input" th:field="*{name}" required />
+        </div>
+
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" class="form-input" th:field="*{username}" required />
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+
+                <input type="email" class="form-input" th:field="*{email}" required />
+
+
+            <button type="button" id="send-otp-btn" class="btn btn-secondary" style="display: none; margin-top: 10px;">
+                Send OTP
+            </button>
+        </div>
+
+        <div id="otp-section" class="form-group" style="display: none;">
+            <label for="otp">Enter OTP:</label>
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <input type="text" id="otp" class="form-input" placeholder="6-digit code"/>
+                <button type="button" id="verify-otp-btn" class="btn btn-secondary" style="white-space: nowrap;">Verify OTP</button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Phone:</label>
+            <input type="text" id="phone" class="form-input" th:field="*{phone}" required />
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" class="form-input" th:field="*{password}" required />
+        </div>
+
+        <button type="submit" id="create-account-btn" class="btn" disabled>Create Account</button>
+    </form>
+
+    <p class="form-link">
+        <a th:href="@{/loginsystem/login}">Already have an account? Login</a>
+    </p>
+</div>
+
+<script th:src="@{/js/script.js}"></script>
+
+</body>
+</html>
